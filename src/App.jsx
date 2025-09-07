@@ -63,7 +63,7 @@ export default function App() {
 
       {/* 3. Latest Activity */}
       <section className="latestActivity">
-        <h2>Latest Forum Posts</h2>
+        <h2>Latest Posts</h2>
         <ul>
           {posts.map((post) => {
             return (

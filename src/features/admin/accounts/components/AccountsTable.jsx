@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAccount } from "../../../../context/AccountContext";
 import { useAdminAccount } from "../../../../context/AdminAccountContext";
 import useMutation from "../../../../hooks/useMutation";
+import { MdOutlineClear } from "react-icons/md";
+import { MdOutlineCheck } from "react-icons/md";
 
 export default function AccountsTable() {
   return (
@@ -36,11 +37,9 @@ function TableBody() {
     setError,
     roles,
   } = useAdminAccount();
-  const { mutate, loading, error, data } = useMutation(
-    "/admin/account",
-    "PUT",
-    ["accounts"]
-  );
+  const { mutate, loading } = useMutation("/admin/account", "PUT", [
+    "accounts",
+  ]);
 
   const startEditing = (e, account) => {
     e.preventDefault();
@@ -58,6 +57,9 @@ function TableBody() {
 
   const saveEdits = async (e) => {
     e.preventDefault();
+
+    if (loading) return;
+
     try {
       await mutate({ id: selected.id, ...formData });
       setSelected(null);
@@ -105,10 +107,10 @@ function TableBody() {
             {isEditing(selected, account) ? (
               <>
                 <button className="cancelEditBtn" onClick={stopEditing}>
-                  Cancel
+                  <MdOutlineClear />
                 </button>
                 <button className="saveAccountBtn" onClick={saveEdits}>
-                  Save
+                  <MdOutlineCheck />
                 </button>
               </>
             ) : (
@@ -145,24 +147,41 @@ function AvatarCell({ isEditing, value, onChange }) {
   }, [value]);
 
   return (
-    <td>
-      <img
-        src={preview || "/default-avatar.png"}
-        alt="Account Avatar"
-        style={{
-          width: 38,
-          height: 38,
-          borderRadius: "50%",
-          objectFit: "cover",
-        }}
-      />
-      {isEditing && (
-        <input
-          name="avatar_url"
-          type="file"
-          accept="image/*"
-          style={{ marginTop: "6px" }}
-          onChange={handleFileChange}
+    <td className="avatarData">
+      {isEditing ? (
+        <>
+          <label htmlFor="avatar_upload" className="avatarImageContainer">
+            <img
+              src={preview || "/default-avatar.png"}
+              alt="Account Avatar"
+              style={{
+                width: 38,
+                height: 38,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+          </label>
+          <input
+            id="avatar_upload"
+            name="avatar_url"
+            type="file"
+            accept="image/*"
+            style={{ marginTop: "6px" }}
+            onChange={handleFileChange}
+            hidden
+          />
+        </>
+      ) : (
+        <img
+          src={preview || "/default-avatar.png"}
+          alt="Account Avatar"
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
         />
       )}
     </td>

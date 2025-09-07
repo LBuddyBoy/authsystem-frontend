@@ -1,16 +1,19 @@
 import { useContext, createContext, useState } from "react";
-import useQuery from "../../../../hooks/useQuery.js";
-import Loading from "../../../../components/Loading";
+import useQuery from "../hooks/useQuery.js";
+import Loading from "../components/Loading.jsx";
 
 const AdminRolesContext = createContext();
 
 export function AdminRolesProvider({ children }) {
   const { loading, data: roles } = useQuery("/roles");
   const [error, setError] = useState();
+  const [editing, setEditing] = useState(null);
 
   if (loading || !roles) return <Loading></Loading>;
 
   const exports = {
+    editing,
+    setEditing,
     roles,
     error,
     setError,

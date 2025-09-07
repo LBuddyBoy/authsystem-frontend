@@ -20,8 +20,14 @@ export default function PostCard({ post }) {
         </div>
       </div>
       <div className="postCardStats">
-        <span className="postCardStat">{post.replies} Replies</span>
-        <span className="postCardStat">{0} Views</span>
+        <span className="postCardStat">
+          <p>{post.replies}</p>
+          <footer>Replies</footer>
+        </span>
+        <span className="postCardStat">
+          <p>{0}</p>
+          <footer>Views</footer>
+        </span>
       </div>
     </li>
   );

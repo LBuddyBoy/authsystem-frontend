@@ -121,6 +121,7 @@
 @media (max-width: 600px) {
   .postCreation {
     padding: var(--spacing);
+    max-width: 400px;
   }
 
   .postCreationButtons {

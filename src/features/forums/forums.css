@@ -76,11 +76,10 @@
 /* Responsive */
 @media (max-width: 600px) {
   .forumsContainer {
+    max-width: 400px;
     padding: var(--spacing) 0 calc(var(--spacing) * 0.3) 0;
   }
   .forumCard {
-    flex-direction: column;
-    align-items: flex-start;
     padding: calc(var(--spacing) * 0.85) var(--spacing);
     gap: 0.65rem;
   }

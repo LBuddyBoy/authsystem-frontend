@@ -48,8 +48,8 @@ function ReplyButtons({ reply }) {
     <div className="replyButtons">
       {isEditing(reply) ? (
         <>
-          <button onClick={() => stopEditing()}>Cancel</button>
           <button onClick={() => saveEdits()}>Save</button>
+          <button onClick={() => stopEditing()}>Cancel</button>
         </>
       ) : (
         <>

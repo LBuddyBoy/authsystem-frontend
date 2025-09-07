@@ -1,24 +1,17 @@
 import Button from "../../../../components/Button";
-import { useAccount } from "../../../../context/AccountContext";
 import { useAdminAccount } from "../../../../context/AdminAccountContext";
 
 export default function AccountsSearch() {
-  const { setQueryData } = useAdminAccount();
-  const { query } = useAccount();
+  const { setPage, setQueryField, setQueryValue, queryField, queryValue } =
+    useAdminAccount();
 
   const handleSubmit = async (formData) => {
     const search = formData.get("search");
     const field = formData.get("field");
 
-    try {
-      const result = await query(
-        "/admin/accounts/search/" + field + "/" + search
-      );
-
-      setQueryData(result);
-    } catch (error) {
-      console.log(error);
-    }
+    setQueryField(field);
+    setQueryValue(search);
+    setPage(0);
   };
 
   return (
@@ -39,11 +32,16 @@ export default function AccountsSearch() {
         </label>
         <Button id={"searchAccountBtn"} text={"Search"} />
       </form>
-      <Button
-        id={"clearSearchBtn"}
-        text={"Clear"}
-        action={() => setQueryData(null)}
-      />
+      {(queryField || queryValue) && (
+        <Button
+          id={"clearSearchBtn"}
+          text={"Clear"}
+          action={() => {
+            setQueryField(null);
+            setQueryValue(null);
+          }}
+        />
+      )}
     </>
   );
 }

@@ -33,9 +33,6 @@
 }
 
 .myPostsList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
@@ -113,14 +110,15 @@
 
 @media (max-width: 700px) {
   .myPostsPage {
-    padding: 1rem 0.2rem;
+    padding: 1rem 0.75rem;
     border-radius: 10px;
+    max-width: 400px;
   }
   .myPostsHeader h1 {
     font-size: 1.18rem;
   }
   .myPostCard {
-    padding: 0.8rem 0.5rem;
+    padding: 0.8rem 0.8rem;
     border-radius: 7px;
     font-size: 0.98rem;
   }

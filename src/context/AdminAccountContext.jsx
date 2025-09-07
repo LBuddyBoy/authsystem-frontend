@@ -1,60 +1,65 @@
 import { useContext, createContext, useState } from "react";
 import useQuery from "../hooks/useQuery";
 import Loading from "../components/Loading";
-import { useAPI } from "./APIContext";
 
 const AdminAccountContext = createContext();
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 5;
 
 export function AdminAccountProvider({ children }) {
-  const [cursor, setCursor] = useState(0);
-  const [updated, setUpdated] = useState(0);
-  const [queryData, setQueryData] = useState();
+  const [page, setPage] = useState(0);
   const [selected, setSelected] = useState(null);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState();
-  const { loading, data } = useQuery(
-    "/admin/accounts/" + PAGE_SIZE + "/" + cursor,
-    "accounts", [cursor],
-  );
+  const [queryField, setQueryField] = useState(null);
+  const [queryValue, setQueryValue] = useState(null);
   const { loading: rolesLoading, data: roles } = useQuery("/roles");
+
+  let accountsURL = `/admin/accounts?page=${page}&limit=${PAGE_SIZE}`;
+
+  if (queryField && queryValue) {
+    accountsURL += `&searchField=${queryField}`;
+    accountsURL += `&searchValue=${queryValue}`;
+  }
+
+  const { loading, data } = useQuery(accountsURL, "accounts", [page, queryField, queryValue]);
 
   if (loading || !data || rolesLoading || !roles) {
     return <Loading></Loading>;
   }
 
-  const { accounts, nextCursor } = data;
+  const { accounts, nextPage } = data;
 
   const handleNextPage = (e) => {
     e.preventDefault();
-    setCursor(nextCursor);
+    setPage(nextPage);
   };
 
   const handlePreviousPage = () => {
-    if (cursor - PAGE_SIZE < 0 || cursor <= 0) {
+    if (page - PAGE_SIZE < 0 || page <= 0) {
       return;
     }
 
-    setCursor((current) => current - PAGE_SIZE);
+    setPage((current) => current - PAGE_SIZE);
   };
 
   const exports = {
     handleNextPage,
     handlePreviousPage,
-    accounts: queryData ? queryData : accounts,
-    nextCursor,
-    cursor,
+    accounts,
+    nextPage,
+    page,
     roles,
-    setCursor,
-    queryData,
-    setQueryData,
+    setPage,
+    queryField,
+    setQueryField,
+    queryValue,
+    setQueryValue,
     selected,
     setSelected,
     formData,
     error,
     setError,
-    setUpdated,
     setFormData,
   };
 

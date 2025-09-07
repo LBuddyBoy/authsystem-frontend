@@ -125,6 +125,7 @@
   gap: 0.7em;
   margin: 0.2em 0 0.4em 0;
 }
+
 .replyButtons button {
   font-family: var(--font-main);
   font-size: 0.97rem;
@@ -136,6 +137,7 @@
   color: #fff;
   transition: background var(--transition), opacity var(--transition);
 }
+
 .replyButtons button:hover,
 .replyButtons button:focus {
   opacity: 0.9;

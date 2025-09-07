@@ -92,7 +92,6 @@
 }
 
 .postCardStats {
-  flex: 1;
   display: flex;
   flex-direction: row;
   gap: 1.2em;
@@ -100,26 +99,37 @@
 }
 
 .postCardStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0ch;
   font-size: 1.02rem;
   color: var(--primary);
   font-weight: 500;
+  align-items: center;
+}
+
+.postCardStat p {
+  margin: 0px;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .forumPageContainer {
     padding: var(--spacing) 0 calc(var(--spacing) * 0.3) 0;
+    max-width: 400px;
   }
+
+  .forumPageHeader {
+    padding-left: 15px;
+  }
+
+  .postsSection header {
+    padding-left: 15px;
+    align-self: flex-start;
+  }
+
   .postCard {
-    flex-direction: column;
-    align-items: flex-start;
     padding: calc(var(--spacing) * 0.85) var(--spacing);
     gap: 0.65rem;
-  }
-  .postCardStats {
-    width: 100%;
-    gap: 1em;
-    justify-content: flex-start;
-    margin-top: 0.5em;
   }
 }
